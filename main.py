@@ -1,16 +1,27 @@
-# This is a sample Python script.
+from datetime import date as dt
+import time as t
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+whole_date = dt.today()
+day = whole_date.day
 
+if 3 < day < 20:
+    ordinal_number = "th"
+elif day%10 == 1:
+    ordinal_number = "th"
+elif day%10 == 2:
+    ordinal_number = "nd"
+elif day%10 == 3:
+    ordinal_number = "rd"
+else:
+    ordinal_number = "th"
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+month = whole_date.strftime("%B")
+year = whole_date.year
 
+print(f"Today is {day} of {month} {year}")
+print("Which advent of code do you want to solve today? or press s for solutions")
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if input("Please input the day number to solve or input s for solutions: ") == "s":
+    print("work in progress")
+else:
+    print("work in progress")
