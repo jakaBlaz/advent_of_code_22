@@ -1,6 +1,6 @@
 # constants
 summary = 0
-filename = "test.txt"
+filename = "input.txt"
 
 # Functions
 def prep_data():
@@ -44,22 +44,62 @@ def prep_data():
 
 
 def parse_instructions(instructions):
+    instruction = []
     for i in instructions:
         move = i[(i.find("move")+len("move")):(i.find("from")-1)].strip()
         from_ = i[(i.find("from")+len("from")):(i.find("to")-1)].strip()
         to = i[(i.find("to")+len("to")):].strip()
-        print(f"We have move: {move} and from: {from_} and to: {to} ")
-        return move, from_, to
+        # print(f"We have move: {move} and from: {from_} and to: {to} ")
+        instruction.append([move, from_, to])
+    # print(instruction)
+    return instruction
 
-def move_crate(x,move_instruction):
+
+def move_crate(position, move_instruction):
+    [move, from_, to] = move_instruction
+    temp = position[(int(to)-1)][::-1]
+    for j in position[int(from_)-1][:int(move)]:
+        temp.append(j)
+    position[(int(to) - 1)] = temp[::-1]
+    position[int(from_)-1] = position[int(from_)-1][int(move):]
+
+    # print(position)
+    return position
+
+
+def move_crate_whole(position, move_instruction):
+    [move, from_, to] = move_instruction
+    temp = position[(int(to)-1)][::-1]
+    for j in position[int(from_)-1][:int(move)][::-1]:
+        temp.append(j)
+    position[(int(to) - 1)] = temp[::-1]
+    position[int(from_)-1] = position[int(from_)-1][int(move):]
+
+    # print(position)
+    return position
+
+
+def Extract(lst):
+    return [item[0] for item in lst]
+
+
+def part_1():
+    x, y = prep_data()  # crates in rows, instructions
+    print(x)
+    print(y)
+    instruct = parse_instructions(y)
+    for i in instruct:
+        x = move_crate(x, i)
+    print(Extract(x))
 
 
 # Main
 if __name__ == "__main__":
-    x, y = prep_data() # crates in rows, instructions
+    x, y = prep_data()  # crates in rows, instructions
     print(x)
     print(y)
-    [z, a, b] = parse_instructions(y)
-
-
+    instruct = parse_instructions(y)
+    for i in instruct:
+        x = move_crate_whole(x, i)
+    print(Extract(x))
 
